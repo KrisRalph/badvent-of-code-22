@@ -1,0 +1,48 @@
+cabal-version:      2.4
+name:               advent-of-code
+version:            0.1.0.0
+
+synopsis:           advent of code '22
+license:            NONE
+author:             Kris Ralph
+maintainer:         kris.ralph45@gmail.com
+extra-source-files: README.md
+
+common common-options
+  ghc-options:
+    -Wall -Wno-unused-imports -Wcompat -Widentities -Wincomplete-uni-patterns
+    -Wincomplete-record-updates -Wpartial-fields -Wmissing-deriving-strategies
+
+  default-language: GHC2021
+  default-extensions:
+    OverloadedStrings RankNTypes LambdaCase GeneralizedNewtypeDeriving DerivingVia DeriveAnyClass
+
+  build-depends:
+    base,
+    random,
+    bytestring,
+    containers,
+    unordered-containers,
+    text,
+    directory,
+    lens,
+    mtl,
+    template-haskell,
+    pretty-simple,
+
+library
+  import:           common-options
+  exposed-modules:  
+    ImportList
+    DayOne
+    DayTwo
+    Paths_advent_of_code
+  hs-source-dirs:   src
+
+executable main
+  import:           common-options
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  ghc-options:      -threaded -O2 -rtsopts -with-rtsopts=-N
+  build-depends:    advent-of-code
+
