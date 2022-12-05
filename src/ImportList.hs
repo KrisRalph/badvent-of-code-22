@@ -1,5 +1,4 @@
 {-# LANGUAGE TemplateHaskellQuotes #-}
-{-# LANGUAGE TupleSections #-}
 
 module ImportList where
 
