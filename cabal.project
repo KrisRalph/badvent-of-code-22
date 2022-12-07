@@ -1,0 +1,4 @@
+packages: ./*.cabal
+
+package advent-of-code
+  optimization: 2
