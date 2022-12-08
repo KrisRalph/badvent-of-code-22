@@ -2,7 +2,6 @@
 
 module DayOne (main) where
 
-import Control.Monad (join)
 import Data.Function (on)
 import Data.List (maximumBy, sortBy)
 import Data.Maybe (mapMaybe)
@@ -22,7 +21,7 @@ dayOneQB t = take 3 . sortBy (flip compare `on` sum) $ readInts t
 
 readInts :: Text -> [[Int]]
 readInts t = mapMaybe (readMaybe @Int) <$> readableStrings
-  where 
+  where
     splitLines = filter ((/= 0) . Text.length) . Text.splitOn "\n" <$> Text.splitOn "\n\n" t
     readableStrings = fmap Text.unpack <$> splitLines
 
@@ -31,6 +30,6 @@ main = do
   elves <- elfList
   let dayOneQARes = dayOneQA elves
   putStrLn ("QA: " ++ show dayOneQARes ++ " " ++ show (sum dayOneQARes))
-  
+
   let dayOneQBRes = dayOneQB elves
-  putStrLn ("QB: " ++ show dayOneQBRes ++  " " ++ show (sum . fmap sum $ dayOneQBRes))
+  putStrLn ("QB: " ++ show dayOneQBRes ++ " " ++ show (sum . fmap sum $ dayOneQBRes))

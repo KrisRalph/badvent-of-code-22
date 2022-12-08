@@ -2,14 +2,10 @@
 
 module DayTwo (main) where
 
-import Data.Function (on)
 import Data.Text (Text)
-import Data.Text qualified as Text
 import Data.Text.IO qualified as Text.IO
 import Text.Parsec
-import Text.Parsec.Char
 import Text.Parsec.Text
-import Text.Pretty.Simple
 
 data RPS = Rock | Paper | Scissors
   deriving stock (Show)
