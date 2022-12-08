@@ -6,6 +6,7 @@ module Main where
 import Control.Monad
 import DayOne (main)
 import DayTwo (main)
+import DayThree (main)
 import ImportList (adventOfCodeMains)
 
 $(adventOfCodeMains)

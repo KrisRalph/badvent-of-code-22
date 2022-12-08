@@ -47,6 +47,7 @@ library
     ImportList
     DayOne
     DayTwo
+    DayThree
     Paths_advent_of_code
   hs-source-dirs:   src
 
