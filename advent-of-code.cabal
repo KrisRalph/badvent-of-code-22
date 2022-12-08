@@ -10,12 +10,23 @@ extra-source-files: README.md
 
 common common-options
   ghc-options:
-    -Wall -Wno-unused-imports -Wcompat -Widentities -Wincomplete-uni-patterns
-    -Wincomplete-record-updates -Wpartial-fields -Wmissing-deriving-strategies
+    -Wall 
+    -Wno-unused-imports 
+    -Wcompat 
+    -Widentities 
+    -Wincomplete-uni-patterns
+    -Wincomplete-record-updates 
+    -Wpartial-fields 
+    -Wmissing-deriving-strategies
 
   default-language: GHC2021
   default-extensions:
-    OverloadedStrings RankNTypes LambdaCase GeneralizedNewtypeDeriving DerivingVia DeriveAnyClass
+    OverloadedStrings 
+    RankNTypes 
+    LambdaCase 
+    GeneralizedNewtypeDeriving 
+    DerivingVia 
+    DeriveAnyClass
 
   build-depends:
     base,
@@ -25,8 +36,8 @@ common common-options
     unordered-containers,
     text,
     directory,
+    parsec,
     lens,
-    mtl,
     template-haskell,
     pretty-simple,
 
