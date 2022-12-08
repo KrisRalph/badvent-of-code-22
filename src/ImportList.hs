@@ -4,10 +4,11 @@ module ImportList where
 
 import Control.Monad
 import Data.Functor ((<&>))
-import Data.List (intersperse)
+import Data.List (intersperse, elemIndex, sortBy)
 import GHC.IO.Unsafe
 import Language.Haskell.TH
 import Language.Haskell.TH.Syntax
+import Data.Text (Text)
 
 -- utility library to not have to write so many lines in main
 -- but it's more lines, so, uh...
@@ -30,7 +31,7 @@ isModuleInLib (Module _ (ModName m)) = take 3 m == "Day"
 isModuleAdventOfCodeDay m = isModuleLocal m && isModuleInLib m
 
 adventOfCodeDays :: Q [Module]
-adventOfCodeDays = importList >>= filterM (return . isModuleAdventOfCodeDay)
+adventOfCodeDays = importList >>= filterM (return . isModuleAdventOfCodeDay) <&> sortBy placeOnSortOrder
 
 getModuleMain :: Module -> Q Name
 getModuleMain (Module _ (ModName m)) = do
@@ -70,3 +71,39 @@ adventOfCodeMains = do
     [ SigD newName' ioType, -- adventOfCode :: [IO ()]
       ValD (VarP newName') (NormalB (ListE listRef)) [] -- adventOfCode = [DayOneMain, DayTwoMain, ...]
     ]
+
+placeOnSortOrder :: Module -> Module -> Ordering
+placeOnSortOrder (Module _ (ModName n)) (Module _ (ModName m)) = 
+  let idxOfDay modName = elemIndex (drop 3 modName) sortOrder
+  in case (idxOfDay n, idxOfDay m) of
+    (Just day, Just day') -> day `compare` day'
+    _ -> n `compare` m
+
+sortOrder :: [String]
+sortOrder =
+  [ "One"
+  , "Two"
+  , "Three"
+  , "Four"
+  , "Five"
+  , "Six"
+  , "Seven"
+  , "Eight"
+  , "Nine"
+  , "Ten"
+  , "Eleven"
+  , "Twelve"
+  , "Thirteen"
+  , "Fourteen"
+  , "Fifteen"
+  , "Sixteen"
+  , "Seventeen"
+  , "Eighteen"
+  , "Nineteen"
+  , "Twenty"
+  , "TwentyOne"
+  , "TwentyTwo"
+  , "TwentyThree"
+  , "TwentyFour"
+  , "TwentyFive"
+  ]
