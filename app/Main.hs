@@ -5,6 +5,7 @@
 module Main where
 
 import Control.Monad
+import DayFour (main)
 import DayOne (main)
 import DayThree (main)
 import DayTwo (main)
