@@ -7,6 +7,7 @@ import Data.Text (Text)
 import Data.Text.IO qualified as Text.IO
 import Text.Parsec
 import Text.Parsec.Text
+import Utils (number)
 
 campCleanupList :: IO Text
 campCleanupList = Text.IO.readFile "./files/DayFour/DayFour.txt"
@@ -29,9 +30,6 @@ checkOverlaps a b = lowerBound b `elem` [lowerBound a .. upperBound a]
 
 checkOverlapsAtAll :: Assignment -> Assignment -> Bool
 checkOverlapsAtAll a b = checkOverlaps a b || checkOverlaps b a
-
-number :: Parser Int
-number = read <$> many1 digit
 
 parseAssignment :: Parser Assignment
 parseAssignment = Assignment <$> number <* string "-" <*> number

@@ -4,11 +4,9 @@ module ImportList where
 
 import Control.Monad
 import Data.Functor ((<&>))
-import Data.List (intersperse, elemIndex, sortBy)
-import GHC.IO.Unsafe
+import Data.List (elemIndex, sortBy)
 import Language.Haskell.TH
 import Language.Haskell.TH.Syntax
-import Data.Text (Text)
 
 -- utility library to not have to write so many lines in main
 -- but it's more lines, so, uh...
