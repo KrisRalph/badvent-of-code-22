@@ -10,22 +10,22 @@ extra-source-files: README.md
 
 common common-options
   ghc-options:
-    -Wall 
-    -Wunused-imports 
-    -Wcompat 
-    -Widentities 
+    -Wall
+    -Wunused-imports
+    -Wcompat
+    -Widentities
     -Wincomplete-uni-patterns
-    -Wincomplete-record-updates 
-    -Wpartial-fields 
+    -Wincomplete-record-updates
+    -Wpartial-fields
     -Wmissing-deriving-strategies
 
   default-language: GHC2021
   default-extensions:
-    OverloadedStrings 
-    RankNTypes 
-    LambdaCase 
-    GeneralizedNewtypeDeriving 
-    DerivingVia 
+    OverloadedStrings
+    RankNTypes
+    LambdaCase
+    GeneralizedNewtypeDeriving
+    DerivingVia
     DeriveAnyClass
 
   build-depends:
@@ -43,12 +43,14 @@ common common-options
 
 library
   import:           common-options
-  exposed-modules:  
+  exposed-modules:
     ImportList
+    Utils
     DayOne
     DayTwo
     DayThree
     DayFour
+    DayFive
     Paths_advent_of_code
   hs-source-dirs:   src
 
