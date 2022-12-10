@@ -51,6 +51,7 @@ library
     DayThree
     DayFour
     DayFive
+    DaySix
     Paths_advent_of_code
   hs-source-dirs:   src
 

@@ -4,9 +4,10 @@
 
 module Main where
 
-import DayFour (main)
 import DayFive (main)
+import DayFour (main)
 import DayOne (main)
+import DaySix (main)
 import DayThree (main)
 import DayTwo (main)
 import ImportList (adventOfCodeMains)
