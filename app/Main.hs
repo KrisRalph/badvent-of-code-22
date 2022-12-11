@@ -7,6 +7,7 @@ module Main where
 import DayFive (main)
 import DayFour (main)
 import DayOne (main)
+import DaySeven (main)
 import DaySix (main)
 import DayThree (main)
 import DayTwo (main)
