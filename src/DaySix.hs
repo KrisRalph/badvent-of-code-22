@@ -1,14 +1,12 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module DaySix (main) where
 
+import Data.HashSet (HashSet)
+import Data.HashSet qualified as HashSet
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.IO qualified as Text.IO
-import Data.HashSet (HashSet)
-import Data.HashSet qualified as HashSet
 import Utils (tshow)
-import Data.Maybe (fromMaybe)
 
 isStartMarker :: Int -> Text -> Bool
 isStartMarker n cs = Text.length cs == n && go cs HashSet.empty
@@ -20,7 +18,7 @@ isStartMarker n cs = Text.length cs == n && go cs HashSet.empty
       pure $ not (t `HashSet.member` seen) && go ts (HashSet.insert t seen)
 
 -- i'm using this zipper to slide across the block of text
-data Zipper a = Zipper { width :: Int, index :: Int, prev :: [a], current :: a, rest :: a}
+data Zipper a = Zipper {width :: Int, index :: Int, prev :: [a], current :: a, rest :: a}
   deriving stock (Show)
 
 slidingWindow :: Int -> Text -> Zipper Text
@@ -36,8 +34,9 @@ rightWhile :: (Text -> Bool) -> Zipper Text -> Zipper Text
 rightWhile cond z = if cond (current z) then rightWhile cond (right z) else z
 
 findFirstMarker :: Int -> Text -> Int
-findFirstMarker offset t = (+ offset) . index $
-  rightWhile (not . isStartMarker offset) (slidingWindow offset t)
+findFirstMarker offset t =
+  (+ offset) . index $
+    rightWhile (not . isStartMarker offset) (slidingWindow offset t)
 
 findFirstStartMarker :: Text -> Int
 findFirstStartMarker = findFirstMarker 4

@@ -1,6 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
-
 module DayThree (main) where
 
 import Data.HashSet qualified as HashSet

@@ -1,5 +1,3 @@
-{-# LANGUAGE TypeApplications #-}
-
 module DayOne (main) where
 
 import Data.Function (on)
@@ -20,7 +18,7 @@ dayOneQB :: Text -> [[Int]]
 dayOneQB t = take 3 . sortBy (flip compare `on` sum) $ readInts t
 
 readInts :: Text -> [[Int]]
-readInts t = mapMaybe (readMaybe @Int) <$> readableStrings
+readInts t = mapMaybe readMaybe <$> readableStrings
   where
     splitLines = filter ((/= 0) . Text.length) . Text.splitOn "\n" <$> Text.splitOn "\n\n" t
     readableStrings = fmap Text.unpack <$> splitLines

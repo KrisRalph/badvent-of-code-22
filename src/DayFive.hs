@@ -1,6 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
-
 module DayFive (main) where
 
 import Control.Exception (Exception)
@@ -186,9 +183,8 @@ main = do
   case parseResults of
     Left err -> print err
     Right result ->
-      let 
-        resultA = either (error . show) id (processCrateStacks Single result)
-        resultB = either (error . show) id (processCrateStacks Multiple result)
-      in do
-        Text.IO.putStrLn $ "QA: " <> displayTopOfStack resultA
-        Text.IO.putStrLn $ "QB: " <> displayTopOfStack resultB
+      let resultA = either (error . show) id (processCrateStacks Single result)
+          resultB = either (error . show) id (processCrateStacks Multiple result)
+       in do
+            Text.IO.putStrLn $ "QA: " <> displayTopOfStack resultA
+            Text.IO.putStrLn $ "QB: " <> displayTopOfStack resultB

@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module DayTwo (main) where
 
 import Data.Text (Text)

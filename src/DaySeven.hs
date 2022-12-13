@@ -1,8 +1,6 @@
-{-# LANGUAGE OverloadedRecordDot #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS_GHC -Wno-unused-top-binds #-} -- ;A;
+-- ;A;
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 
 module DaySeven (main) where
 

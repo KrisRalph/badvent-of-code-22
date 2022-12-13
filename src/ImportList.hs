@@ -71,37 +71,37 @@ adventOfCodeMains = do
     ]
 
 placeOnSortOrder :: Module -> Module -> Ordering
-placeOnSortOrder (Module _ (ModName n)) (Module _ (ModName m)) = 
+placeOnSortOrder (Module _ (ModName n)) (Module _ (ModName m)) =
   let idxOfDay modName = elemIndex (drop 3 modName) sortOrder
-  in case (idxOfDay n, idxOfDay m) of
-    (Just day, Just day') -> day `compare` day'
-    _ -> n `compare` m
+   in case (idxOfDay n, idxOfDay m) of
+        (Just day, Just day') -> day `compare` day'
+        _ -> n `compare` m
 
 sortOrder :: [String]
 sortOrder =
-  [ "One"
-  , "Two"
-  , "Three"
-  , "Four"
-  , "Five"
-  , "Six"
-  , "Seven"
-  , "Eight"
-  , "Nine"
-  , "Ten"
-  , "Eleven"
-  , "Twelve"
-  , "Thirteen"
-  , "Fourteen"
-  , "Fifteen"
-  , "Sixteen"
-  , "Seventeen"
-  , "Eighteen"
-  , "Nineteen"
-  , "Twenty"
-  , "TwentyOne"
-  , "TwentyTwo"
-  , "TwentyThree"
-  , "TwentyFour"
-  , "TwentyFive"
+  [ "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
+    "Twenty",
+    "TwentyOne",
+    "TwentyTwo",
+    "TwentyThree",
+    "TwentyFour",
+    "TwentyFive"
   ]
