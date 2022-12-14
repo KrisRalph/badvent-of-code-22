@@ -22,6 +22,7 @@ common common-options
   default-language: GHC2021
   default-extensions:
     OverloadedStrings
+    RecordWildCards
     RankNTypes
     LambdaCase
     GeneralizedNewtypeDeriving
@@ -34,6 +35,7 @@ common common-options
     bytestring,
     containers,
     unordered-containers,
+    array,
     text,
     directory,
     parsec,
@@ -53,6 +55,7 @@ library
     DayFive
     DaySix
     DaySeven
+    DayEight
     Paths_advent_of_code
   hs-source-dirs:   src
 

@@ -11,6 +11,7 @@ import DaySeven (main)
 import DaySix (main)
 import DayThree (main)
 import DayTwo (main)
+import DayEight (main)
 import ImportList (adventOfCodeMains)
 
 $(adventOfCodeMains)
