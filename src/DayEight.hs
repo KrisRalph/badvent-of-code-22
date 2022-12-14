@@ -8,11 +8,9 @@ import Data.Maybe (mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.IO qualified as Text.IO
-import Utils (tReadMaybe)
+import Utils (Grid (..), Index (..), gridFrom2dList, gridIndex, safeAt, tReadMaybe)
 
 type Tree = Int
-
-type Index = (Int, Int)
 
 data Direction = North | East | South | West
   deriving stock (Show)
@@ -25,27 +23,16 @@ visible (Treeple _ _ b) = b
 cardinals :: [Direction]
 cardinals = [North, East, South, West]
 
-fromIndex :: Int -> Index -> Int
-fromIndex width (y, x) = (y * width) + x
-
-data Forest = Forest {trees :: Array Int Tree, width :: Int, height :: Int}
-  deriving stock (Show)
-
-safeAt :: Ix i => Array i e -> i -> Maybe e
-safeAt arr ix = if inRange (bounds arr) ix then Just (arr ! ix) else Nothing
+type Forest = Grid Index Tree
 
 treeAt :: Forest -> Index -> Maybe Tree
-treeAt forest idx = forest.trees `safeAt` fromIndex forest.height idx
+treeAt forest idx = forest.grid `safeAt` gridIndex forest idx
 
 forestFromList :: [[Int]] -> Forest
-forestFromList xss = Forest trees w h
-  where
-    trees = listArray (0, (w * h) - 1) (concat xss)
-    w = length $ head xss
-    h = length xss
+forestFromList = gridFrom2dList
 
 getForestIndices :: Forest -> [Index]
-getForestIndices (Forest _ w h) = [(x, y) | x <- [0 .. w - 1], y <- [0 .. h - 1]]
+getForestIndices g = range (Index 0 0, maxIndex g)
 
 -- find out if tree is visible from any of north, west, south, east
 treeIsVisible :: Forest -> Index -> Bool
@@ -73,14 +60,15 @@ filterVisisbleTrees forest =
 
 getToEdge :: Index -> Forest -> Direction -> [Tree]
 getToEdge idx forest dir =
-  let arrayIndexes = fromIndex forest.height <$> goDirection idx
-   in mapMaybe (forest.trees `safeAt`) arrayIndexes
-  where
-    goDirection = case dir of
-      North -> \(y, x) -> [(y', x) | y' <- [y, y - 1 .. 0]]
-      East -> \(y, x) -> [(y, x') | x' <- [x .. forest.width - 1]]
-      South -> \(y, x) -> [(y', x) | y' <- [y .. forest.height - 1]]
-      West -> \(y, x) -> [(y, x') | x' <- [x, x - 1 .. 0]]
+  let arrayIndexes = gridIndex forest <$> goDirection (maxIndex forest) idx dir
+   in mapMaybe (forest.grid `safeAt`) arrayIndexes
+
+goDirection :: Index -> Index -> Direction -> [Index]
+goDirection (Index h w) (Index y x) dir = case dir of
+  North -> [Index y' x | y' <- [y, y - 1 .. 0]]
+  East -> [Index y x' | x' <- [x .. w - 1]]
+  South -> [Index y' x | y' <- [y .. h - 1]]
+  West -> [Index y x' | x' <- [x, x - 1 .. 0]]
 
 treesListFile :: IO Text
 treesListFile = Text.IO.readFile "./files/DayEight/DayEight.txt"

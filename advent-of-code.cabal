@@ -48,6 +48,7 @@ library
   exposed-modules:
     ImportList
     Utils
+    Utils.Grid2d
     DayOne
     DayTwo
     DayThree
@@ -56,6 +57,7 @@ library
     DaySix
     DaySeven
     DayEight
+    DayNine
     Paths_advent_of_code
   hs-source-dirs:   src
 

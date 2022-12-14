@@ -1,5 +1,11 @@
-module Utils where
-
+module Utils
+  ( module Utils.Grid2d,
+    number,
+    tshow,
+    tReadMaybe,
+  )
+where
+import Utils.Grid2d 
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Text.Parsec (digit, many1)
