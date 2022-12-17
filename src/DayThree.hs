@@ -7,6 +7,7 @@ import Data.Maybe (fromMaybe, mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.IO qualified as Text.IO
+import Utils (chunksOf)
 
 data Backpack = Backpack {left :: Text, right :: Text}
   deriving stock (Show, Eq, Ord)
@@ -43,15 +44,6 @@ intersect3 b c d =
       hashSets = toSet <$> [b, c, d]
    in Text.pack . HashSet.toList $
         foldr1 HashSet.intersection hashSets
-
-chunksOf :: Int -> [a] -> [[a]]
-chunksOf 1 s = [s]
-chunksOf n xs = fromMaybe [] $ do
-  (chunk, remainder) <- splitAtMay n xs
-  return $ chunk : chunksOf n remainder
-
-splitAtMay :: Int -> [a] -> Maybe ([a], [a])
-splitAtMay n xs = if length xs >= n then Just (splitAt n xs) else Nothing
 
 tuplify3 :: Ord a => [a] -> [(a, a, a)]
 tuplify3 xs = mapMaybe toTup (chunksOf 3 xs)

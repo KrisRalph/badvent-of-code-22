@@ -27,7 +27,7 @@ main :: IO ()
 main = do
   elves <- elfList
   let dayOneQARes = dayOneQA elves
-  putStrLn ("QA: " ++ show dayOneQARes ++ " " ++ show (sum dayOneQARes))
+  putStrLn ("QA: " <> show (sum dayOneQARes))
 
   let dayOneQBRes = dayOneQB elves
-  putStrLn ("QB: " ++ show dayOneQBRes ++ " " ++ show (sum . fmap sum $ dayOneQBRes))
+  putStrLn ("QB: " <> show (sum . fmap sum $ dayOneQBRes))

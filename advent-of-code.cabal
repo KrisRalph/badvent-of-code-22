@@ -58,6 +58,7 @@ library
     DaySeven
     DayEight
     DayNine
+    DayTen
     Paths_advent_of_code
   hs-source-dirs:   src
 

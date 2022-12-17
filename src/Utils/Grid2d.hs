@@ -3,16 +3,19 @@ module Utils.Grid2d
     Grid (..),
     safeAt,
     gridAt,
+    gridSetAt,
     gridIndex,
     gridIndexFromWidth,
     emptyGrid,
     gridFrom2dList,
+    gridTo2dList,
   )
 where
 
-import Data.Array (Array, array, bounds, inRange, listArray, (!))
+import Data.Array (Array, array, bounds, inRange, listArray, (!), (//), assocs)
 import Data.Array qualified as Array
 import Data.Ix (Ix)
+import Utils (chunksOf)
 
 -- 2d indexing
 data Index = Index Int Int
@@ -51,6 +54,12 @@ data Grid i a = Grid {grid :: Array Int a, maxIndex :: i}
 gridAt :: Grid Index a -> Index -> Maybe a
 gridAt g i = grid g `safeAt` gridIndex g i
 
+gridSetAt :: Grid Index a -> Index -> a -> Grid Index a
+gridSetAt g i newVal = 
+  let newAssocIndex = gridIndex g i
+      newArray = grid g // [(newAssocIndex, newVal)]
+  in g { grid = newArray }
+
 gridIndex :: Grid Index a -> Index -> Int
 gridIndex g = gridIndexFromWidth (width g)
 
@@ -66,8 +75,15 @@ emptyGrid w h filler = Grid {grid = newGrid, maxIndex = Index w h}
     newGrid = array (0, (w * h) - 1) (zip [0 ..] (repeat filler))
 
 gridFrom2dList :: [[a]] -> Grid Index a
-gridFrom2dList xss = Grid newArray (Index w h)
+gridFrom2dList xss = Grid newArray (Index h w)
   where
     newArray = listArray (0, (w * h) - 1) (concat xss)
     w = length $ head xss
     h = length xss
+
+gridTo2dList :: Grid Index a -> [[a]]
+gridTo2dList g = 
+  let maxX = width g
+      grid' = snd <$> assocs (grid g)
+  in chunksOf maxX grid'
+  

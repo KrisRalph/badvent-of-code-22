@@ -8,7 +8,8 @@ import Data.Maybe (mapMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
 import Data.Text.IO qualified as Text.IO
-import Utils (Grid (..), Index (..), gridFrom2dList, gridIndex, safeAt, tReadMaybe)
+import Utils (tReadMaybe)
+import Utils.Grid2d (Grid (..), Index (..), gridFrom2dList, gridIndex, safeAt)
 
 type Tree = Int
 
