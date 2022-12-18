@@ -99,4 +99,3 @@ main = do
   inputList <- rockPaperScissorsList
   putStr "QA: " >> runAParser parseStrategyFileA inputList
   putStr "QB: " >> runAParser parseStrategyFileB inputList
-  putStrLn "Done!"

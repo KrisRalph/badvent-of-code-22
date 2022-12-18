@@ -1,6 +1,6 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wno-unused-imports #-}
+{-# OPTIONS_GHC -ddump-splices #-}
 
 module Main where
 
@@ -19,4 +19,4 @@ import ImportList (adventOfCodeMains)
 $(adventOfCodeMains)
 
 main :: IO ()
-main = sequence_ adventOfCode >> putStrLn "done!"
+main = sequence_ adventOfCode >> putStrLn (replicate 80 '-' <> "\ndone!")

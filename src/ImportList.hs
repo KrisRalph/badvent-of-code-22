@@ -52,10 +52,9 @@ makeHeading mod' =
 doFuncRefs :: [Module] -> Q [Exp]
 doFuncRefs modules = do
   headingRefs <- mapM makeHeading modules
-  funcRefs <- mapM funcRef modules
-  dividerRef <- repeat <$> [|putStrLn $ replicate 80 '-'|]
-  let interleave3 xs ys zs = concatMap (\(a, b, c) -> [a, b, c]) $ zip3 xs ys zs
-  return $ interleave3 headingRefs funcRefs dividerRef
+  funcRefs <- mapM funcRef modules -- the main function
+  let interleave3 xs ys = concatMap (\(a, b) -> [a, b]) $ zip xs ys
+  return $ interleave3 headingRefs funcRefs
 
 -- let listRef = map (zip modules)
 
@@ -67,7 +66,7 @@ adventOfCodeMains = do
   let newName' = mkName "adventOfCode"
   return
     [ SigD newName' ioType, -- adventOfCode :: [IO ()]
-      ValD (VarP newName') (NormalB (ListE listRef)) [] -- adventOfCode = [DayOneMain, DayTwoMain, ...]
+      ValD (VarP newName') (NormalB (ListE listRef)) [] -- adventOfCode = [DayOne.main, DayTwo.main, ...]
     ]
 
 placeOnSortOrder :: Module -> Module -> Ordering

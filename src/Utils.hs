@@ -7,16 +7,17 @@ module Utils
     splitAtMay,
   )
 where
+
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Text qualified as Text
-import Text.Parsec (digit, many1, string, spaces, try, (<|>))
+import Text.Parsec (digit, many1, spaces, string, try, (<|>))
 import Text.Parsec.Text (Parser)
 import Text.Read (readMaybe)
-import Data.Maybe (fromMaybe)
 
 number :: Parser Int
 number = try readNegative <|> readPositive
-  where 
+  where
     readPositive = read <$> many1 digit
     readNegative = negate . read <$ string "-" <*> many1 digit
 
@@ -34,6 +35,6 @@ chunksOf 1 s = [s]
 chunksOf n xs = fromMaybe [] $ do
   (chunk, remainder) <- splitAtMay n xs
   return $ chunk : chunksOf n remainder
-  
+
 splitAtMay :: Int -> [a] -> Maybe ([a], [a])
 splitAtMay n xs = if length xs >= n then Just (splitAt n xs) else Nothing
