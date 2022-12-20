@@ -15,7 +15,7 @@ import Text.Parsec (digit, many1, spaces, string, try, (<|>))
 import Text.Parsec.Text (Parser)
 import Text.Read (readMaybe)
 
-number :: Parser Int
+number :: (Read a, Integral a) => Parser a
 number = try readNegative <|> readPositive
   where
     readPositive = read <$> many1 digit

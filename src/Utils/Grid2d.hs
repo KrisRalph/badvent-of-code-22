@@ -72,7 +72,7 @@ gridIndexFromWidth maxW (Index y x) = (y * maxW) + x
 emptyGrid :: Int -> Int -> a -> Grid Index a
 emptyGrid w h filler = Grid {grid = newGrid, maxIndex = Index w h}
   where
-    newGrid = array (0, (w * h) - 1) (zip [0 ..] (repeat filler))
+    newGrid = array (0, (w * h) - 1) (map (, filler) [0 ..])
 
 gridFrom2dList :: [[a]] -> Grid Index a
 gridFrom2dList xss = Grid newArray (Index h w)
