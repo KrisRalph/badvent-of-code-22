@@ -30,6 +30,7 @@ common common-options
     GeneralizedNewtypeDeriving
     DerivingVia
     DeriveAnyClass
+    DeriveGeneric
 
   build-depends:
     base,
@@ -37,6 +38,7 @@ common common-options
     bytestring,
     containers,
     unordered-containers,
+    hashable,
     array,
     text,
     time,
@@ -45,6 +47,7 @@ common common-options
     parsec,
     lens,
     template-haskell,
+    pqueue,
     pretty-simple,
 
 library
@@ -64,6 +67,7 @@ library
     DayNine
     DayTen
     DayEleven
+    DayTwelve
     Paths_advent_of_code
   hs-source-dirs:   src
 

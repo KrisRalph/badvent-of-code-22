@@ -6,9 +6,14 @@ module Utils.Grid2d
     gridSetAt,
     gridIndex,
     gridIndexFromWidth,
+    gridIndexIsInBounds,
+    gridIntToIndex,
     emptyGrid,
     gridFrom2dList,
     gridTo2dList,
+    gridWidth,
+    gridIndexOf,
+    gridAllIndexesOf
   )
 where
 
@@ -16,10 +21,17 @@ import Data.Array (Array, array, bounds, inRange, listArray, (!), (//), assocs)
 import Data.Array qualified as Array
 import Data.Ix (Ix)
 import Utils (chunksOf)
+import Data.List (find)
+import GHC.Generics (Generic)
+import Data.Hashable (Hashable, hash)
 
 -- 2d indexing
 data Index = Index Int Int
-  deriving stock Show
+  deriving stock (Show, Generic)
+  
+-- this instance is somewhat bogus
+instance Hashable Index where
+  hash (Index y x) = y * x
 
 instance Eq Index where
   (Index y x) == (Index b a) = y == b && x == a
@@ -54,6 +66,16 @@ data Grid i a = Grid {grid :: Array Int a, maxIndex :: i}
 gridAt :: Grid Index a -> Index -> Maybe a
 gridAt g i = grid g `safeAt` gridIndex g i
 
+gridIndexOf :: Eq a => Grid Index a -> a -> Maybe Index
+gridIndexOf g ele =
+  let found = find ((==ele) . snd) (assocs $ grid g)
+  in gridIntToIndex g . fst <$> found
+
+gridAllIndexesOf :: Eq a => Grid Index a -> a -> [Index]
+gridAllIndexesOf g ele =
+  let found = filter ((==ele) . snd) (assocs $ grid g)
+  in gridIntToIndex g . fst <$> found
+
 gridSetAt :: Grid Index a -> Index -> a -> Grid Index a
 gridSetAt g i newVal = 
   let newAssocIndex = gridIndex g i
@@ -61,10 +83,19 @@ gridSetAt g i newVal =
   in g { grid = newArray }
 
 gridIndex :: Grid Index a -> Index -> Int
-gridIndex g = gridIndexFromWidth (width g)
+gridIndex g = gridIndexFromWidth (gridWidth g)
 
-width :: Grid Index a -> Int
-width (Grid _ (Index _ x)) = x
+gridIndexIsInBounds :: Grid Index a -> Index -> Bool
+gridIndexIsInBounds g (Index y x) = 
+  let (Index maxY maxX) = maxIndex g
+  in (y < maxY && x < maxX && y >= 0 && x >= 0)
+
+gridIntToIndex :: Grid Index a -> Int -> Index
+gridIntToIndex g i = Index y x
+  where (y, x) = i `quotRem` gridWidth g
+
+gridWidth :: Grid Index a -> Int
+gridWidth (Grid _ (Index _ x)) = x
 
 gridIndexFromWidth :: Int -> Index -> Int
 gridIndexFromWidth maxW (Index y x) = (y * maxW) + x
@@ -83,7 +114,7 @@ gridFrom2dList xss = Grid newArray (Index h w)
 
 gridTo2dList :: Grid Index a -> [[a]]
 gridTo2dList g = 
-  let maxX = width g
+  let maxX = gridWidth g
       grid' = snd <$> assocs (grid g)
   in chunksOf maxX grid'
   
